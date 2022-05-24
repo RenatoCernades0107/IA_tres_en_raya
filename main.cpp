@@ -11,85 +11,88 @@ struct Move{
 char player = 'X', opponent = 'O';
 
 // Evaluate if there are more moves
-template<int ncol, int nrow>
-bool no_more_moves(char table[ncol][nrow]){
-    cout << ncol << " " << nrow << endl;
-    for(int i=0; i<ncol; i++)
-        for(int j=0; j<nrow; j++)
+template<int n>
+bool no_more_moves(char table[n][n]){
+    for(int i=0; i<n; i++)
+        for(int j=0; j<n; j++)
             if(table[i][j] == '_')
                 return false;
     return true;
 };
 
-template<int ncol>
-shared_ptr<char> checkrow(char table[ncol]){
+template<int n>
+shared_ptr<char> check_rows(char table[n]){
     int count_player = 0;
     int count_opponent = 0;
-    for(int i=0; i<ncol; i++){
+    for(int i=0; i < n; i++){
         if(table[i] == 'X')
             count_player++;
         else if(table[i] == 'Y')
             count_opponent++;
     }
-    if(count_player == ncol)
+    if(count_player == n)
         return make_shared<char>(player);
-    else if(count_opponent == ncol)
+    else if(count_opponent == n)
         return make_shared<char>(opponent);
     else
         return make_shared<char>('_');
 }
 
-template<int ncol, int nrow>
-shared_ptr<char> checkcols(char table[ncol][nrow]){
+template<int n>
+shared_ptr<char> check_cols(char table[n][n]){
     int count_player = 0;
     int count_opponent = 0;
-    for(int i=0; i<ncol; i++)
+    for(int i=0; i < n; i++)
     {
-        for(int j=0; j<nrow; j++)
+        for(int j=0; j<n; j++)
         {
             if(table[j][i] == player)
                 count_player++;
             else if(table[j][i] == opponent)
                 count_opponent++;
         }
+
+        if(count_player == n)
+            return make_shared<char>(player);
+        else if(count_opponent == n)
+            return make_shared<char>(opponent);
+        else{
+            count_player = 0;
+            count_opponent = 0;
+        }
     }
-    if(count_player == ncol)
-        return make_shared<char>(player);
-    else if(count_opponent == ncol)
-        return make_shared<char>(opponent);
-    else
-        return make_shared<char>('_');
+    return make_shared<char>('_');
 }
 
-template <int ncol, int nrow>
-shared_ptr<char> checkdiagonals(char table[ncol][nrow]){
+template <int n>
+shared_ptr<char> check_diagonals(char table[n][n]){
     int count_player = 0;
     int count_opponent = 0;
     // Comprobamos la primera diagonal
-    for(int i=0; i<ncol; i++){
+    for(int i=0; i < n; i++){
         if(table[i][i] == player)
             count_player++;
         else if(table[i][i] == opponent)
             count_opponent++;
     }
 
-    if(count_player == ncol)
+    if(count_player == n)
         return make_shared<char>(player);
-    else if(count_opponent == ncol)
+    else if(count_opponent == n)
         return make_shared<char>(opponent);
     else{
         count_player = 0;
         count_opponent = 0;
         // Comprobamos la segunda diagonal
-        for(int i=0; i<ncol; i++){
-            if(table[i][ncol - 1 - i] == player)
+        for(int i=0; i < n; i++){
+            if(table[i][n - 1 - i] == player)
                 count_player++;
-            else if(table[i][ncol - 1 - i] == opponent)
+            else if(table[i][n - 1 - i] == opponent)
                 count_opponent++;
         }
-        if(count_player == ncol)
+        if(count_player == n)
             return make_shared<char>(player);
-        else if(count_opponent == ncol)
+        else if(count_opponent == n)
             return make_shared<char>(opponent);
     }
     return make_shared<char>('_');
@@ -99,13 +102,13 @@ shared_ptr<char> checkdiagonals(char table[ncol][nrow]){
 // 10 if X player won
 // -10 if O player won
 // 0 in other cases
-template<int ncol, int nrow>
-int evaluate(char table[ncol][nrow]){
+template<int n>
+int evaluate(char table[n][n]){
 
     // Check the rows
-    for(int i=0; i<nrow; i++)
+    for(int i=0; i<n; i++)
     {
-        shared_ptr<char> who_win = checkrow<ncol>(table[i]);
+        shared_ptr<char> who_win = check_rows<n>(table[i]);
         if(*who_win == player)
             return 10;
         else if(*who_win == opponent)
@@ -113,14 +116,14 @@ int evaluate(char table[ncol][nrow]){
     }
 
     // Check the cols
-    shared_ptr<char> who_win_r = checkcols<ncol, nrow>(table);
+    shared_ptr<char> who_win_r = check_cols<n>(table);
     if(*who_win_r == player)
         return 10;
     else if(*who_win_r == opponent)
         return -10;
 
     // Check diagonals
-    shared_ptr<char> who_win_d = checkdiagonals<ncol, nrow>(table);
+    shared_ptr<char> who_win_d = check_diagonals<n>(table);
     if(*who_win_d == player)
         return 10;
     else if(*who_win_d == opponent)
@@ -130,32 +133,97 @@ int evaluate(char table[ncol][nrow]){
 }
 
 // Minimax algorithm
-template <int ncol, int nrow>
-int minimax(char table[ncol][nrow], bool playMax){
+template <int n>
+int minimax(char table[n][n], bool playMax){
 
-    int score = evaluate<ncol, nrow>(table);
+    int score = evaluate<n>(table);
 
     if(score == 10 || score == -10){
         return score;
     }
 
-    if(no_more_moves<ncol, nrow>(table)){
+    if(no_more_moves<n>(table)){
         return 0;
     }
 
+    if(playMax){
 
+        int best_value = -1000;
 
+        for(int i=0; i < n; i++){
+            for(int j=0; j < n; j++){
+
+                if(table[i][j] == '_'){
+                    table[i][j] = player;
+                    best_value = max(best_value, minimax<n>(table, false));
+                    table[i][j] = '_';
+                }
+            }
+        }
+        return best_value;
+
+    } else {
+
+        int best_value = 1000;
+
+        for(int i=0; i < n; i++){
+            for(int j=0; j < n; j++){
+
+                if(table[i][j] == '_'){
+                    table[i][j] = opponent;
+                    best_value = min(best_value, minimax<n>(table, true));
+                    table[i][j] = '_';
+                }
+            }
+        }
+        return best_value;
+    }
+}
+
+template <int n>
+pair<int, int> find_best_move(char table[n][n]){
+
+    // Check if we can make more moves
+    if(no_more_moves<n>(table)){
+        return pair<int, int>{-1, -1};
+    }
+
+    pair<int, int> best;
+    int best_value = -1;
+
+    // Simulate all cases and choose the most beneficial for us
+    for(int i=0; i<n; i++){
+        for(int j=0; j<n; j++){
+
+            // make a move if it's possible and with minimax check if we can win with that move
+            if(table[i][j] == '_'){
+
+                table[i][j] = player;
+
+                int value = minimax<n>(table, false);
+
+                if(value >= best_value){
+                    best_value = value;
+                    best = {i, j};
+                }
+
+                table[i][j] = '_';
+            }
+        }
+    }
+    return best;
 }
 
 int main() {
+
     char table[3][3] = {
-            {'_', '_', 'X'},
-            {'_', 'X', 'O'},
-            {'_', 'X', 'O'}
+            {'O', '_', 'X'},
+            {'O', 'O', '_'},
+            {'X', 'X', '_'}
     };
-    cout << evaluate<3, 3>(table) << endl;
-//    Move bestMove = findBestMove(table);
-//    cout << bestMove.x << bestMove.y << endl;
+
+    pair<int, int> bestMove = find_best_move<3>(table);
+    cout << "Fila "<< bestMove.first << " y " << "Columna " << bestMove.second << endl;
 
 
 

@@ -1,3 +1,3 @@
-C:/Users/renat/OneDrive/Desktop/universidad_ciclo_3/progra3/beta_ajedrez/cmake-build-debug/CMakeFiles/beta_ajedrez.dir
-C:/Users/renat/OneDrive/Desktop/universidad_ciclo_3/progra3/beta_ajedrez/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/renat/OneDrive/Desktop/universidad_ciclo_3/progra3/beta_ajedrez/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/renat/OneDrive/Desktop/Programacion/ProyectosEnProceso/IA_tres_en_raya/IA_tres_en_raya/cmake-build-debug/CMakeFiles/beta_ajedrez.dir
+C:/Users/renat/OneDrive/Desktop/Programacion/ProyectosEnProceso/IA_tres_en_raya/IA_tres_en_raya/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/renat/OneDrive/Desktop/Programacion/ProyectosEnProceso/IA_tres_en_raya/IA_tres_en_raya/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/renat/OneDrive/Desktop/Programacion/ProyectosEnProceso/IA_tres_en_raya/IA_tres_en_raya/main.cpp
+iostream
+-
+vector
+-
+algorithm
+-
+memory
+-
+

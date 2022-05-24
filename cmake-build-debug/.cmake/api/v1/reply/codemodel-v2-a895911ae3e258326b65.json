@@ -6,10 +6,9 @@
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
 					"minimumCMakeVersion" : 
 					{
-						"string" : "3.22"
+						"string" : "3.20"
 					},
 					"projectIndex" : 0,
 					"source" : ".",
@@ -39,7 +38,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "beta_ajedrez::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-beta_ajedrez-Debug-728d29ffcf519eefce76.json",
+					"jsonFile" : "target-beta_ajedrez-Debug-799302cc2d90975d9453.json",
 					"name" : "beta_ajedrez",
 					"projectIndex" : 0
 				}
@@ -49,12 +48,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/renat/OneDrive/Desktop/universidad_ciclo_3/progra3/beta_ajedrez/cmake-build-debug",
-		"source" : "C:/Users/renat/OneDrive/Desktop/universidad_ciclo_3/progra3/beta_ajedrez"
+		"build" : "C:/Users/renat/OneDrive/Desktop/Programacion/ProyectosEnProceso/IA_tres_en_raya/IA_tres_en_raya/cmake-build-debug",
+		"source" : "C:/Users/renat/OneDrive/Desktop/Programacion/ProyectosEnProceso/IA_tres_en_raya/IA_tres_en_raya"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 3
+		"minor" : 2
 	}
 }
